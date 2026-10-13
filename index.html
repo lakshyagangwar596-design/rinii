@@ -125,7 +125,7 @@
         .reason-card h3 { font-family: 'Poppins', sans-serif; color: var(--hot-pink); font-size: 20px; margin-bottom: 10px; }
         .reason-card p { color: #666; font-size: 15px; line-height: 1.6; }
 
-        /* LETTER (Merged Timeline & Letter) */
+        /* LETTER */
         #letter { background: linear-gradient(135deg, #fff5f5, #ffe4ec); padding: 60px 20px; }
         .letter-container {
             max-width: 700px; background: white; border-radius: 30px;
@@ -158,7 +158,7 @@
         #question {
             background: linear-gradient(135deg, #ffd1dc, #ffb3ba, #ffd4e5, #e8d5f5);
             background-size: 400% 400%; animation: gradientShift 6s ease infinite;
-            padding: 60px 20px; min-height: 100vh; overflow: hidden; /* Required for the running button */
+            padding: 60px 20px; min-height: 100vh; overflow: hidden;
         }
         .question-container { text-align: center; z-index: 2; max-width: 700px; position: relative; }
         .big-heart { font-size: 80px; animation: heartbeat 1.5s ease-in-out infinite; display: block; margin-bottom: 20px; }
@@ -187,7 +187,6 @@
             border: none; padding: 20px 60px; font-size: 28px;
             font-family: 'Quicksand', sans-serif; font-weight: 700;
             border-radius: 50px; cursor: pointer; 
-            /* Very fast transition so it jumps away quickly */
             transition: all 0.15s ease-out; 
             box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 9999;
         }
@@ -270,7 +269,7 @@
             border: none; padding: 12px 30px; font-size: 16px;
             font-family: 'Quicksand', sans-serif; font-weight: 700;
             border-radius: 50px; cursor: pointer; transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(255, 20, 147, 0.3);
+            box-shadow: 0 5px 15px rgba(255, 20, 147, 0.3); position: relative; z-index: 10;
         }
         .coupon-redeem-btn:hover { transform: scale(1.1); box-shadow: 0 8px 25px rgba(255, 20, 147, 0.5); }
         .coupon-redeem-btn.redeemed {
@@ -290,10 +289,10 @@
             position: absolute; top: 50%; left: 50%;
             transform: translate(-50%, -50%) rotate(-20deg) scale(0);
             font-family: 'Poppins', sans-serif; font-size: 36px; font-weight: 900;
-            color: rgba(76, 175, 80, 0.35); border: 5px solid rgba(76, 175, 80, 0.35);
+            color: rgba(76, 175, 80, 0.4); border: 5px solid rgba(76, 175, 80, 0.4);
             border-radius: 15px; padding: 5px 20px; pointer-events: none;
             transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 5; white-space: nowrap;
+            z-index: 20; white-space: nowrap; background: rgba(255,255,255,0.85);
         }
         .redeemed-stamp.show { transform: translate(-50%, -50%) rotate(-20deg) scale(1); }
 
@@ -330,16 +329,6 @@
         }
         .next-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(255,20,147,0.5); }
         .next-btn::after { content: ' →'; }
-
-        /* MUSIC */
-        .music-toggle {
-            position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px;
-            border-radius: 50%; background: white; border: 2px solid var(--pink);
-            font-size: 24px; cursor: pointer; z-index: 1000;
-            display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 5px 15px rgba(255,105,180,0.3); transition: all 0.3s ease;
-        }
-        .music-toggle:hover { transform: scale(1.1); }
 
         /* SPARKLE */
         .sparkle {
@@ -428,7 +417,7 @@
         <button class="next-btn" onclick="goToSection(2)">Read My Letter</button>
     </div>
 
-    <!-- SECTION 3: LETTER (Merged Timeline & Letter) -->
+    <!-- SECTION 3: LETTER -->
     <div class="section" id="letter" data-section="2">
         <div class="letter-container">
             <h2>My Feelings For You 💌</h2>
@@ -528,7 +517,7 @@
                     <div class="coupon-name">Unlimited Free Hugs</div>
                     <p class="coupon-desc">Good for one (or a hundred) warm, tight, never-letting-go hugs. Available 24/7, rain or shine. Squeeze as long as you want.</p>
                     <div class="redeemed-stamp" id="stamp1">REDEEMED ✅</div>
-                    <button class="coupon-redeem-btn" onclick="redeemCoupon(1)">Redeem 💕</button>
+                    <button class="coupon-redeem-btn" id="btn-coupon1" onclick="redeemCoupon(1)">Redeem 💕</button>
                 </div>
                 <div class="coupon-tear"></div>
                 <div class="coupon-footer">∞ Unlimited uses · No expiration · Valid forever</div>
@@ -545,7 +534,7 @@
                     <div class="coupon-name">Movie Date Night</div>
                     <p class="coupon-desc">You pick the movie (even if it's a rom-com I'll pretend to hate). I'll bring the popcorn, blankets, and cuddles. Your call: theater or couch.</p>
                     <div class="redeemed-stamp" id="stamp2">REDEEMED ✅</div>
-                    <button class="coupon-redeem-btn" onclick="redeemCoupon(2)">Redeem 💕</button>
+                    <button class="coupon-redeem-btn" id="btn-coupon2" onclick="redeemCoupon(2)">Redeem 💕</button>
                 </div>
                 <div class="coupon-tear"></div>
                 <div class="coupon-footer">Includes free snacks & my full attention 🍿</div>
@@ -562,13 +551,29 @@
                     <div class="coupon-name">A Plushie of Your Choice</div>
                     <p class="coupon-desc">Any plushie, any size, any character. A giant bear? A tiny duck? A whole zoo? Point at it and it's yours. No budget limit (okay maybe a small one 😅).</p>
                     <div class="redeemed-stamp" id="stamp3">REDEEMED ✅</div>
-                    <button class="coupon-redeem-btn" onclick="redeemCoupon(3)">Redeem 💕</button>
+                    <button class="coupon-redeem-btn" id="btn-coupon3" onclick="redeemCoupon(3)">Redeem 💕</button>
                 </div>
                 <div class="coupon-tear"></div>
                 <div class="coupon-footer">One-time use · Maximum cuteness guaranteed 🥰</div>
             </div>
 
-         
+            <!-- Coupon 4: Breakfast in Bed -->
+            <div class="coupon" id="coupon4">
+                <div class="coupon-header">
+                    <h3>COUPON #4</h3>
+                    <div class="coupon-number">04</div>
+                </div>
+                <div class="coupon-body">
+                    <span class="coupon-emoji">🥞</span>
+                    <div class="coupon-name">Breakfast in Bed</div>
+                    <p class="coupon-desc">Pancakes, waffles, eggs — whatever you crave. Served with a flower, orange juice, and me looking sleepy but trying my best. 😴🌸</p>
+                    <div class="redeemed-stamp" id="stamp4">REDEEMED ✅</div>
+                    <button class="coupon-redeem-btn" id="btn-coupon4" onclick="redeemCoupon(4)">Redeem 💕</button>
+                </div>
+                <div class="coupon-tear"></div>
+                <div class="coupon-footer">Warning: pancakes may be slightly burnt 🔥😂</div>
+            </div>
+
             <!-- Coupon 5: You're Always Right -->
             <div class="coupon" id="coupon5">
                 <div class="coupon-header">
@@ -580,7 +585,7 @@
                     <div class="coupon-name">"You're Always Right" Card</div>
                     <p class="coupon-desc">Play this during ANY argument and I instantly lose. No debates, no "but technically...", no nothing. You win. Period. 🏳️</p>
                     <div class="redeemed-stamp" id="stamp5">REDEEMED ✅</div>
-                    <button class="coupon-redeem-btn" onclick="redeemCoupon(4)">Redeem 💕</button>
+                    <button class="coupon-redeem-btn" id="btn-coupon5" onclick="redeemCoupon(5)">Redeem 💕</button>
                 </div>
                 <div class="coupon-tear"></div>
                 <div class="coupon-footer">Use wisely (or don't, I'll still agree) 😤➡️😌</div>
@@ -597,7 +602,7 @@
                     <div class="coupon-name">Late Night Call Pass</div>
                     <p class="coupon-desc">Call me at 2 AM, 3 AM, 4 AM — I WILL pick up. No matter how deep in sleep I am. You need me? I'm there. Always. 🌙</p>
                     <div class="redeemed-stamp" id="stamp6">REDEEMED ✅</div>
-                    <button class="coupon-redeem-btn" onclick="redeemCoupon(5)">Redeem 💕</button>
+                    <button class="coupon-redeem-btn" id="btn-coupon6" onclick="redeemCoupon(6)">Redeem 💕</button>
                 </div>
                 <div class="coupon-tear"></div>
                 <div class="coupon-footer">∞ Unlimited uses · I'll never ignore you 💤💗</div>
@@ -614,7 +619,7 @@
                     <div class="coupon-name">Mystery Surprise Date</div>
                     <p class="coupon-desc">I plan EVERYTHING. All you do is show up looking gorgeous (which is always). Where? When? What? It's a surprise! Just trust me. 😉✨</p>
                     <div class="redeemed-stamp" id="stamp7">REDEEMED ✅</div>
-                    <button class="coupon-redeem-btn" onclick="redeemCoupon(6)">Redeem 💕</button>
+                    <button class="coupon-redeem-btn" id="btn-coupon7" onclick="redeemCoupon(7)">Redeem 💕</button>
                 </div>
                 <div class="coupon-tear"></div>
                 <div class="coupon-footer">Dress code: whatever makes you feel amazing 👗💖</div>
@@ -627,12 +632,10 @@
         </p>
     </div>
 
-    <button class="music-toggle" id="musicBtn" onclick="toggleMusic()">🎵</button>
-
     <script>
         let currentSection = 0;
         let noAttempts = 0;
-        const totalSections = 7; // Updated because we merged sections
+        const totalSections = 7;
 
         const noMessages = [
             "Are you sure? 🥺", "Please reconsider... 😢", "My heart is breaking... 💔",
@@ -727,17 +730,12 @@
             yesBtn.style.transform = `scale(${1 + noAttempts * 0.08})`;
             yesBtn.style.fontSize = (28 + noAttempts * 2) + 'px';
             
-            // RUNNING AWAY LOGIC - Whole Screen!
             if (noAttempts >= 2) {
                 btn.style.position = 'fixed';
-                
-                // Calculate safe bounds so it doesn't go off screen
                 const safeWidth = window.innerWidth - btn.offsetWidth - 40;
                 const safeHeight = window.innerHeight - btn.offsetHeight - 40;
-                
                 const randomX = Math.max(20, Math.random() * safeWidth);
                 const randomY = Math.max(20, Math.random() * safeHeight);
-                
                 btn.style.left = randomX + 'px';
                 btn.style.top = randomY + 'px';
             }
@@ -783,28 +781,38 @@
         }
 
         function redeemCoupon(id) {
-            const btn = document.querySelector(`#coupon${id} .coupon-redeem-btn`);
+            const btn = document.getElementById(`btn-coupon${id}`);
             const stamp = document.getElementById(`stamp${id}`);
+            
+            if (!btn || !stamp) return;
             if (btn.classList.contains('redeemed')) return;
+
             btn.classList.add('redeemed');
             btn.textContent = 'Redeemed! ✅';
             stamp.classList.add('show');
+
+            if (id === 7) {
+                setTimeout(() => {
+                    alert("🎁 Mystery Date Redeemed! Lakshya is now planning a secret date for you! 😉✨");
+                }, 300);
+            }
+
             const rect = btn.getBoundingClientRect();
             const emojis = ['💕', '✨', '🎉', '💗', '🥳', '💖', '🌸'];
-            for (let i = 0; i < 20; i++) {
+            for (let i = 0; i < 25; i++) {
                 setTimeout(() => {
                     const spark = document.createElement('div');
                     spark.className = 'confetti-piece';
                     spark.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-                    spark.style.fontSize = (12 + Math.random() * 16) + 'px';
+                    spark.style.fontSize = (14 + Math.random() * 16) + 'px';
                     spark.style.background = 'none';
                     spark.style.width = 'auto'; spark.style.height = 'auto';
-                    spark.style.left = (rect.left + rect.width / 2 + (Math.random() - 0.5) * 200) + 'px';
+                    spark.style.left = (rect.left + rect.width / 2 + (Math.random() - 0.5) * 180) + 'px';
                     spark.style.top = rect.top + 'px';
                     spark.style.animationDuration = (1.5 + Math.random() * 2) + 's';
                     document.body.appendChild(spark);
-                    setTimeout(() => spark.remove(), 4000);
-                }, i * 40);
+                    setTimeout(() => spark.remove(), 3000);
+                }, i * 30);
             }
         }
 
@@ -826,11 +834,6 @@
             document.body.appendChild(r);
             setTimeout(() => r.remove(), 600);
         });
-
-        function toggleMusic() {
-            const btn = document.getElementById('musicBtn');
-            btn.textContent = btn.textContent === '🎵' ? '🔊' : '🎵';
-        }
 
         document.addEventListener('keydown', (e) => {
             if ((e.key === 'ArrowRight' || e.key === 'ArrowDown') && currentSection < totalSections - 1) goToSection(currentSection + 1);
